@@ -26,4 +26,4 @@ RUN pip install -r requirements.txt
 # Render inyecta el puerto como variable de entorno $PORT
 # No fijamos un puerto, sino que usamos el que Render proporcione
 # Esto es lo que permite que Render lo detecte correctamente
-CMD ["sh", "-c", "rasa run --enable-api --cors '*' --port ${PORT}"]
+CMD sh -c "rasa run --enable-api --cors '*' --port \$PORT"
