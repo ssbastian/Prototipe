@@ -1,5 +1,5 @@
-# Usa Python 3.10 (compatible con Rasa 3.x)
-FROM python:3.10-slim
+# Usa Python 3.8 (compatible con Rasa 3.5)
+FROM python:3.8-slim
 
 # Establece el directorio de trabajo
 WORKDIR /app
@@ -12,14 +12,10 @@ RUN apt-get update && \
         libatlas-base-dev \
         libpq-dev \
         gcc \
-        && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Copia los archivos del proyecto
 COPY . /app
-
-# Crea y activa entorno virtual
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
 
 # Instala dependencias
 RUN pip install --upgrade pip setuptools wheel
