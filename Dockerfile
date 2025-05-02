@@ -17,12 +17,14 @@ RUN apt-get update && \
 # Copia los archivos del proyecto
 COPY . /app
 
-# Instala dependencias
-RUN pip install --upgrade pip setuptools wheel
+# Asegúrate de tener la última versión de pip, setuptools y wheel
+RUN python -m pip install --upgrade pip setuptools wheel
+
+# Instala dependencias desde requirements.txt
 RUN pip install -r requirements.txt
 
-# Expone el puerto que Render usará (Render requiere que sea 10000 por defecto, o usar $PORT)
+# Expone el puerto que Render usará (por defecto 10000, o la variable $PORT)
 EXPOSE 10000
 
-# Comando de arranque (Render usa $PORT automáticamente)
+# Comando de arranque (Render inyecta $PORT automáticamente)
 CMD ["rasa", "run", "--enable-api", "--cors", "*", "--port", "10000"]
