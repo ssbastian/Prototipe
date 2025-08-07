@@ -9,6 +9,8 @@ intents:
   - iniciar_conversacion_ligera
   - consejos_sociales
 
+  - traer_botones
+
 
 entities:
   - person_name
@@ -96,6 +98,10 @@ slots:
 
 
 responses:
+
+
+  utter_botones:
+    - text: "Hola estos son los botonoes"
 
   utter_pedir_nombre:
     - text: "Hola, ¿cómo te llamas?"

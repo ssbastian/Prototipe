@@ -2,6 +2,13 @@ version: "3.1"
 
 rules:
 
+
+- rule: botones muestrame
+  steps:
+    - intent: traer_botones
+    - action: utter_botones
+
+
 - rule: Fallback por baja confianza
   steps:
     - intent: nlu_fallback

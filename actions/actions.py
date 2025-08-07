@@ -78,20 +78,43 @@ class ActionGuardarNombre(Action):
 
 
 
+# class ActionPreguntarEmocion(Action):
+#     def name(self):
+#         return "action_preguntar_emocion"
+
+#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
+#         buttons = [
+#             {"title": "😊 Feliz", "payload": '/expresar_emocion{"emocion": "feliz"}'},
+#             {"title": " Triste", "payload": '/expresar_emocion{"emocion": "triste"}'},
+#             {"title": "😣 Ansioso", "payload": '/expresar_emocion{"emocion": "ansioso"}'},
+#             {"title": "😴 Cansado", "payload": '/expresar_emocion{"emocion": "cansado"}'},
+#         ]
+       
+#         dispatcher.utter_message(text="¿Cómo te sientes hoy?\nSelecciona una de las opciones o escribe como te sientes", buttons=buttons,buttons=buttons, button_type="reply")
+#         return []
+    
 class ActionPreguntarEmocion(Action):
     def name(self):
         return "action_preguntar_emocion"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        buttons = [
-            {"title": "😊 Feliz", "payload": '/expresar_emocion{"emocion": "feliz"}'},
-            {"title": " Triste", "payload": '/expresar_emocion{"emocion": "triste"}'},
-            {"title": "😣 Ansioso", "payload": '/expresar_emocion{"emocion": "ansioso"}'},
-            {"title": "😴 Cansado", "payload": '/expresar_emocion{"emocion": "cansado"}'},
-        ]
-        dispatcher.utter_message(text="¿Cómo te sientes hoy?\nSelecciona una de las opciones o escribe como te sientes", buttons=buttons)
+        # Definimos el teclado como variable separada
+        reply_markup = {
+            "keyboard": [
+                ["😊 Feliz", "😢 Triste"],
+                ["😠 Enojado", "😴 Cansado"]
+            ],
+            "resize_keyboard": True,
+            "one_time_keyboard": True  #para que desaparezca después de usar
+        }
+
+        message = {
+            "text": "¿Cómo te sientes hoy?",
+            "reply_markup": reply_markup
+        }
+
+        dispatcher.utter_custom_json(message)
         return []
-    
     
 class ActionReaccionarEmocion(Action):
     def name(self) -> str:
