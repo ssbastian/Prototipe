@@ -1,9 +1,0 @@
-# Ignorar el entorno virtual
-rasa-env/
-.rasa/
-
-# Ignorar archivos de logs y caché
-__pycache__/
-*.pyc
-*.pyo
-*.log
