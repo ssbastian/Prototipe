@@ -1,0 +1,155 @@
+version: "3.1"
+
+intents:
+  - saludo
+  - dar_nombre
+  - expresar_emocion
+  - escribir_emocion_manual
+  - consulta_ayuda
+  - iniciar_conversacion_ligera
+  - consejos_sociales
+
+
+entities:
+  - person_name
+  - emocion
+
+  - situacion_social
+  - tipo_consejo
+  - actividad
+  - tiempo
+  - feedback_sentimiento
+  - intensidad_emocion
+
+slots:
+  
+  usuario_nuevo:
+    type: bool
+    initial_value: true
+    influence_conversation: true
+    mappings: 
+      - type: custom
+
+  name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: person_name
+    influence_conversation: true
+
+  emocion:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: emocion
+
+  emocion_registrada:
+    type: bool
+    initial_value: false
+    influence_conversation: false
+    mappings: 
+      - type: custom
+
+    
+  user_telegram_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  situacion_social:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: situacion_social
+
+  tipo_consejo:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: tipo_consejo
+
+  actividad:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: actividad
+
+  tiempo:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: tiempo
+
+  feedback_sentimiento:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: feedback_sentimiento
+
+  intensidad_emocion:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: intensidad_emocion
+
+
+responses:
+
+  utter_pedir_nombre:
+    - text: "Hola, ¿cómo te llamas?"
+
+  utter_saludo_con_nombre:
+    - text: "¡Hola de nuevo, {name}!"
+  
+  utter_ya_saludado:
+    - text: "¡Hola de nuevo! ¿Cómo te puedo ayudar ahora?"
+
+  utter_saludo_nombre:
+    - text: "¡{name}! Me alegra verte por aquí."
+
+  utter_solicitar_emocion_libre:
+    - text: "Claro, cuéntame con tus propias palabras cómo te sientes."
+    
+  utter_opciones_post_emocion:
+    - text: "¿Qué quieres hacer ahora? Puedes pedirme un consejo, contarme algo o simplemente charlar. 😊"
+
+
+  utter_ofrecer_ayuda:
+    - text: "Claro, estoy aquí para ayudarte 😊 ¿Sobre qué tema te gustaría hablar? Puedo darte consejos o simplemente escucharte."
+  
+  utter_iniciar_conversacion_ligera:
+    - text: "¡Por supuesto! A veces es bueno desconectarse un poco. ¿Te gustaría que hablemos de hobbies, películas o algo que te relaje?"
+ 
+  utter_consejos_sociales:
+    - text: "Un buen primer paso es practicar pequeñas conversaciones. Puedes empezar saludando o preguntando algo simple como '¿Cómo va tu día?'. La clave es no presionarte demasiado 😊 ¿Quieres que te comparta algunos ejemplos prácticos?"
+
+
+  utter_default:
+    - text: "Lo siento, no entendí bien eso. ¿Podrías reformularlo o preguntarme algo relacionado con la ansiedad social?"
+
+ 
+
+
+actions:
+
+  - action_guardar_nombre
+  - action_preguntar_emocion
+  - action_reaccionar_emocion
+  - action_solicitar_emocion_libre
+
+
+
+
+  - action_get_telegram_id
+  - action_motivacion_personalizada
+  - action_simular_conversacion
+  - action_guia_respiracion
+  - action_sugerir_temas
+  - action_set_name
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

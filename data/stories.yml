@@ -1,0 +1,91 @@
+version: "3.1"
+
+stories:
+
+  #SALUDOS
+  - story: flujo de saludo nuevo usuario
+    steps:
+      - intent: saludo
+      - slot_was_set:
+          - usuario_nuevo: true
+      - action: utter_pedir_nombre
+      - intent: dar_nombre
+        entities:
+          - person_name: "Sebastián"
+      - action: action_guardar_nombre
+      - action: action_preguntar_emocion
+
+  - story: flujo de saludo usuario conocido
+    steps:
+      - intent: saludo
+      - slot_was_set:
+          - usuario_nuevo: false
+      - action: utter_saludo_con_nombre
+      - action: action_preguntar_emocion
+
+#Reaccion a emociones y acción dependiendo del estado de animo 
+  - story: reaccion emocion + ayuda
+    steps:
+      - intent: expresar_emocion
+      - action: action_reaccionar_emocion
+      - intent: consulta_ayuda
+      - action: utter_ofrecer_ayuda
+
+  - story: reaccion emocion + charla ligera
+    steps:
+      - intent: expresar_emocion
+      - action: action_reaccionar_emocion
+      - intent: iniciar_conversacion_ligera
+      - action: utter_iniciar_conversacion_ligera
+
+  - story: reaccion emocion + consejo social
+    steps:
+      - intent: expresar_emocion
+      - action: action_reaccionar_emocion
+      - intent: consejos_sociales
+      - action: utter_consejos_sociales
+
+
+  # - story: flujo de conversación empática inicial
+  #   steps:
+  #   - intent: saludo
+  #   - slot_was_set:
+  #       - usuario_nuevo: true
+  #   - action: utter_saludo_usuario_nuevo
+  #   - action: utter_pedir_nombre
+  #   - intent: dar_nombre
+  #   - slot_was_set:
+  #       - nombre_usuario: "Sebastián"
+  #   - action: action_guardar_nombre     # <-- llamar action
+  #   - action: utter_saludo_nombre
+  #   - action: utter_preguntar_emocion
+  #   - intent: expresar_emocion
+  #   - slot_was_set:
+  #       - emocion: triste
+  #   - action: action_responder_emocion
+  #   - slot_was_set:
+  #       - usuario_nuevo: false
+
+
+
+  # - story: usuario_proporciona_nombre
+  #   steps:
+  #     - intent: saludo
+  #     - action: utter_pedir_nombre
+  #     - intent: proporcionar_info_personal
+  #     - action: action_set_name
+  #     - action: utter_greet_with_name
+
+  # - story: practica_conversacion
+  #   steps:
+  #     - intent: ejercicio_practico
+  #     - action: action_simular_conversacion
+  #     - intent: feedback
+  #     - action: utter_motivacion
+
+  # - story: manejo_ansiedad_aguda
+  #   steps:
+  #     - intent: ansiedad_social
+  #     - action: utter_ayuda
+  #     - intent: afirmar
+  #     - action: action_guia_respiracion

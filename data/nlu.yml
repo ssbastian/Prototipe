@@ -1,0 +1,164 @@
+version: "3.1"
+
+nlu:
+
+- intent: saludo
+  examples: |
+    - Hola
+    - Hola, ¿cómo estás?
+    - Buenas tardes
+    - Buen día
+    - Buenas noches
+    - ¿Qué tal?
+    - Hey
+    - Holi
+    - ¡Qué gusto saludarte!
+    - Hola hola
+    - Buenas
+    - Buenas, ¿todo bien?
+    - ¡Hey! ¿Qué hay?
+    - Saludos
+    - ¡Buenas! ¿Cómo te va?
+    - ¡Ey!
+    - Hola de nuevo
+    - Hola, bot
+    - Buenas, ¿me puedes ayudar?
+
+- intent: dar_nombre
+  examples: |
+    - I am [Sebastián](person_name)
+    - Soy [Carlos](person_name)
+    - Mi nombre es [María](person_name)
+    - Puedes decirme [Andrea](person_name)
+    - Llámame [Juan](person_name)
+    - Hola, soy [Pedro](person_name)
+    - Me dicen [Camila](person_name)
+    - Me puedes llamar [Luis](person_name)
+    - Mi nombre completo es [Sebastián Sánchez](person_name)
+    - [Tatiana](person_name)
+
+
+- intent: despedida
+  examples: |
+    - Adiós
+    - Hasta luego
+    - Nos vemos
+    - Ya me voy
+    - Chao
+
+- intent: get_telegram_id
+  examples: |
+    - ¿Cuál es mi ID de Telegram?
+    - Quiero saber mi ID
+    - ¿Me puedes dar mi ID?
+    - Muéstrame mi ID de usuario
+    - ¿Cuál es mi identificador?
+    - ¿Tienes mi número de usuario?
+    - Dame mi ID por favor
+
+- intent: consulta_ayuda
+  examples: |
+    - ¿Me puedes ayudar?
+    - Necesito ayuda
+    - ¿Qué puedo hacer?
+    - No sé cómo manejar esto
+    - ¿Tienes algún consejo?
+    - ¿Puedes orientarme?
+    - Me siento perdido, ¿qué hago?
+    - Ayúdame, por favor
+    - Quiero mejorar pero no sé cómo
+
+- intent: iniciar_conversacion_ligera
+  examples: |
+    - ¿Podemos hablar de otra cosa?
+    - Hablemos de algo más
+    - Cambiemos de tema
+    - Quiero distraerme un poco
+    - Háblame de algo interesante
+    - Cuéntame algo divertido
+    - No quiero hablar de eso ahora
+    - Mejor hablemos de otra cosa
+
+- intent: consejos_sociales
+  examples: |
+    - ¿Tienes algún consejo para hablar con otros?
+    - Me cuesta empezar conversaciones
+    - No sé qué decir cuando conozco a alguien
+    - ¿Cómo puedo socializar mejor?
+    - Me pongo nervioso en reuniones
+    - ¿Cómo hacer amigos siendo introvertido?
+    - ¿Qué digo cuando estoy con extraños?
+    - Me gustaría mejorar mis habilidades sociales
+
+
+
+
+
+
+- intent: ansiedad_social
+  examples: |
+    - Me tiembla la voz al hablar
+    - Siento que voy a hacer el ridículo
+    - ¿Cómo evito ruborizarme?
+
+
+- intent: ejercicio_practico
+  examples: |
+    - Enséñame a presentarme
+    - Practiquemos una entrevista
+    - ¿Cómo pido ayuda en una tienda?
+
+
+- intent: motivacion
+  examples: |
+    - Necesito un poco de ánimo
+    - Me siento sin fuerzas
+
+
+
+- intent: afirmar
+  examples: |
+    - sí
+    - claro
+    - exacto
+    - por supuesto
+
+
+- intent: negar
+  examples: |
+    - no
+    - para nada
+    - nunca
+    - negativo
+    - ni lo digas
+    - no estoy seguro
+    - creo que no
+    - no quiero
+
+# Nuevos intents complementados
+
+- intent: expresar_emocion
+  examples: |
+    - 😊 Feliz
+    - 😔 Triste
+    - me siento feliz
+    - estoy triste
+    - me siento cansado
+    - estoy ansioso
+    - estoy enojado
+    - me siento [feliz](emocion)
+    - me siento [triste](emocion)
+    - estoy [cansado](emocion)
+
+- intent: escribir_emocion_manual
+  examples: |
+    - Escribir mi emoción
+    - Otra emoción
+    - Quiero escribir cómo me siento
+
+- intent: pedir_escucha
+  examples: |
+    - ¿Puedo contarte algo?
+    - Solo quiero desahogarme
+    - ¿Puedes escucharme un momento?
+

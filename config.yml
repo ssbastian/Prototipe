@@ -1,0 +1,43 @@
+language: es
+
+pipeline:
+- name: WhitespaceTokenizer
+- name: RegexFeaturizer
+- name: LexicalSyntacticFeaturizer
+- name: CountVectorsFeaturizer
+  analyzer: word
+  lowercase: true
+- name: CountVectorsFeaturizer
+  analyzer: char_wb    # Mejora para detectar errores ortográficos leves
+  min_ngram: 1
+  max_ngram: 4
+- name: DIETClassifier
+  epochs: 150    # Más entrenamiento para respuestas más naturales
+  constrain_similarities: true
+  batch_size: [32, 64]
+  learning_rate: 0.002
+  random_seed: 42
+  entity_recognition: true
+- name: EntitySynonymMapper
+- name: ResponseSelector
+  epochs: 100
+  retrieval_intent: faq    # Si defines preguntas frecuentes o categorías de empatía
+- name: FallbackClassifier
+  threshold: 0.25
+  ambiguity_threshold: 0.1
+
+policies:
+- name: RulePolicy
+  core_fallback_threshold: 0.3
+  enable_fallback_prediction: true
+  restrict_rules: false
+
+- name: TEDPolicy
+  max_history: 10
+  epochs: 250    # Mayor entrenamiento para entender mejor el flujo conversacional
+  batch_size: [16, 32]
+  learning_rate: 0.003
+
+- name: MemoizationPolicy
+  max_history: 5
+assistant_id: 20250626-234149-wide-faucet

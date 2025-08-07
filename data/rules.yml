@@ -1,0 +1,95 @@
+version: "3.1"
+
+rules:
+
+- rule: Fallback por baja confianza
+  steps:
+    - intent: nlu_fallback
+    - action: utter_default
+
+
+
+
+# - rule: Guardar nombre del usuario
+#   steps:
+#     - intent: dar_nombre
+#     - action: action_guardar_nombre
+
+
+
+
+# - rule: Saludo inicial
+#   steps:
+#     - intent: saludo
+#     - action: utter_pedir_nombre
+
+# - rule: Despedida
+#   steps:
+#     - intent: despedida
+#     - action: utter_goodbye
+
+# - rule: Manejo de fallos
+#   steps:
+#     - intent: default
+#     - action: utter_no_entendido
+
+# NUEVAS REGLAS
+
+# - rule: Obtener ID de Telegram
+#   steps:
+#     - intent: get_telegram_id
+#     - action: action_get_telegram_id
+
+# - rule: Usuario proporciona nombre
+#   steps:
+#     - intent: proporcionar_info_personal
+#     - action: action_set_name
+#     - action: utter_greet_with_name
+
+# - rule: Usuario agradece
+#   steps:
+#     - intent: agradecer
+#     - action: utter_agradecer
+
+# - rule: Usuario se disculpa
+#   steps:
+#     - intent: disculparse
+#     - action: utter_disculparse
+
+# - rule: Usuario expresa emoción
+#   steps:
+#     - intent: expresar_emocion
+#     - action: utter_reconocer_emocion
+#     - action: utter_escucha_activa
+
+# - rule: Usuario pide solo ser escuchado
+#   steps:
+#     - intent: pedir_escucha
+#     - action: utter_escucha_activa
+
+# - rule: Usuario expresa soledad
+#   steps:
+#     - intent: expresar_soledad
+#     - action: utter_soledad
+
+# - rule: Usuario busca conversación ligera
+#   steps:
+#     - intent: iniciar_conversacion_ligera
+#     - action: utter_conversacion_ligera
+
+# - rule: Usuario reacciona con humor
+#   steps:
+#     - intent: reaccionar_chiste_juego
+#     - action: utter_chiste
+
+# - rule: Usuario pregunta cómo está el bot
+#   steps:
+#     - intent: responder_estado_animo_bot
+#     - action: utter_estado_bot
+
+# - rule: Usuario expresa inseguridad personal
+#   steps:
+#     - intent: expresar_duda_sobre_si_mismo
+#     - action: utter_duda_personal
+#     - action: utter_motivacion
+
