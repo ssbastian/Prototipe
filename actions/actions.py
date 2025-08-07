@@ -98,22 +98,38 @@ class ActionPreguntarEmocion(Action):
         return "action_preguntar_emocion"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        # Definimos el teclado como variable separada
+        # Definimos las opciones válidas
+        self.buttons = {
+            "😊 Feliz": "feliz",
+            "😢 Triste": "triste",
+            "😡 Enojado": "enojado",
+            "😴 Cansado": "cansado"
+        }
+
+        # Configuración del teclado
         reply_markup = {
-            "keyboard": [
-                ["😊 Feliz", "😢 Triste"],
-                ["😠 Enojado", "😴 Cansado"]
-            ],
+            "keyboard": [list(self.buttons.keys())[i:i+2] for i in range(0, len(self.buttons), 2)],
             "resize_keyboard": True,
-            "one_time_keyboard": True  #para que desaparezca después de usar
+            "one_time_keyboard": True,
+            "input_field_placeholder": "⚠️ Usa solo los botones ⬆️",
+            "is_persistent": True
         }
 
-        message = {
-            "text": "¿Cómo te sientes hoy?",
-            "reply_markup": reply_markup
-        }
-
-        dispatcher.utter_custom_json(message)
+        # Si el usuario intentó escribir en lugar de usar botones
+        if tracker.latest_action_name == "action_preguntar_emocion" and tracker.latest_message.get('text') not in self.valid_choices:
+            dispatcher.utter_custom_json({
+                "text": "❌ Por favor selecciona una opción usando los botones:",
+                "reply_markup": reply_markup
+            })
+        else:
+            # Mensaje inicial
+            message = {
+                "text": "¿Cómo te sientes hoy?",
+                "reply_markup": reply_markup,
+                "parse_mode": "Markdown"
+            }
+            dispatcher.utter_message(json_message=message)
+        
         return []
     
 class ActionReaccionarEmocion(Action):
@@ -130,7 +146,7 @@ class ActionReaccionarEmocion(Action):
 
         # Reaccionar según la emoción
         if emocion == "feliz":
-            dispatcher.utter_message(text="¡Qué alegría saber que estás feliz! 😊")
+            dispatcher.utter_message(text="¡Qué alegría saber que estás feliz!")
         elif emocion == "triste":
             dispatcher.utter_message(text="Lamento que estés triste. Estoy aquí para escucharte. 😢")
         elif emocion == "ansioso":
