@@ -99,36 +99,34 @@ class ActionPreguntarEmocion(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
         # Definimos las opciones válidas
-        self.buttons = {
+
+        self.valid_choices = {
             "😊 Feliz": "feliz",
+            "😌 Tranquilo": "tranquilo",
+            "😍 Emocionado": "emocionado",
             "😢 Triste": "triste",
+            "😟 Ansioso": "ansioso",
             "😡 Enojado": "enojado",
-            "😴 Cansado": "cansado"
+            "😔 Inseguro": "inseguro",
+            "😴 Cansado": "cansado",
+            "😐 Neutral": "neutral"
         }
 
         # Configuración del teclado
         reply_markup = {
-            "keyboard": [list(self.buttons.keys())[i:i+2] for i in range(0, len(self.buttons), 2)],
+            "keyboard": [list(self.valid_choices.keys())[i:i+3] for i in range(0, len(self.valid_choices), 3)],
             "resize_keyboard": True,
             "one_time_keyboard": True,
-            "input_field_placeholder": "⚠️ Usa solo los botones ⬆️",
+            "input_field_placeholder": "⚠️ Usa solo los botones ⬇️",
             "is_persistent": True
         }
-
-        # Si el usuario intentó escribir en lugar de usar botones
-        if tracker.latest_action_name == "action_preguntar_emocion" and tracker.latest_message.get('text') not in self.valid_choices:
-            dispatcher.utter_custom_json({
-                "text": "❌ Por favor selecciona una opción usando los botones:",
-                "reply_markup": reply_markup
-            })
-        else:
-            # Mensaje inicial
-            message = {
-                "text": "¿Cómo te sientes hoy?",
-                "reply_markup": reply_markup,
-                "parse_mode": "Markdown"
-            }
-            dispatcher.utter_message(json_message=message)
+        # Mensaje inicial
+        message = {
+            "text": "¿Cómo te sientes hoy?",
+            "reply_markup": reply_markup,
+            "parse_mode": "Markdown"
+        }
+        dispatcher.utter_message(json_message=message)
         
         return []
     
