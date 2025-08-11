@@ -9,12 +9,17 @@ intents:
   - iniciar_conversacion_ligera
   - consejos_sociales
 
+  - afirmar
+  - negar
+
   - traer_botones
+  - cambiar_tema
+  - continuar
 
 
 entities:
   - person_name
-  - emocion
+  - emotion
 
   - situacion_social
   - tipo_consejo
@@ -44,8 +49,9 @@ slots:
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: emocion
+        entity: emotion
 
+  #para recordar temas
   emocion_registrada:
     type: bool
     initial_value: false
@@ -54,47 +60,35 @@ slots:
       - type: custom
 
     
+  ultimo_tema:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+ 
+
+  tema_interrumpido:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+ 
+
+  ultimo_tema_guardado:  # Nuevo slot para backup
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+
+
   user_telegram_id:
     type: text
     influence_conversation: false
     mappings:
       - type: custom
 
-  situacion_social:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: situacion_social
 
-  tipo_consejo:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: tipo_consejo
-
-  actividad:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: actividad
-
-  tiempo:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: tiempo
-
-  feedback_sentimiento:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: feedback_sentimiento
-
-  intensidad_emocion:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: intensidad_emocion
 
 
 responses:
@@ -135,7 +129,33 @@ responses:
   utter_default:
     - text: "Lo siento, no entendí bien eso. ¿Podrías reformularlo o preguntarme algo relacionado con la ansiedad social?"
 
- 
+
+  utter_ofrecer_recursos:
+    - text: "Si necesitas ayuda profesional, puedo ofrecerte recursos o conectarte con un especialista. ¿Te gustaría eso?"
+
+  utter_preguntar_continuar:
+    - text: "¿Quieres continuar con lo anterior o prefieres cambiar de tema?"
+      buttons:
+        - title: "Continuar"
+          payload: "/continuar"
+        - title: "Cambiar"
+          payload: "/cambiar_tema"
+
+  utter_retomar_ultimo_tema:
+    - text: "Volvamos a lo tuyo: ¿qué te gustaría hacer ahora? 😊" 
+
+  utter_test_afirmar:
+    - text: "¡Genial! Me alegra que estés de acuerdo. 😊 ¿En qué más puedo ayudarte?xxx"
+  utter_test_negar:
+    - text: "Entiendo, no hay problema. Si cambias de opinión, aquíxxxx"
+
+  utter_test_feliz_afirmar:
+    - text: "¡que bueno que estes feliz, y que bueno que quieras entrenar"
+
+  utter_test_feliz_negar:
+    - text: "¡que bueno que estes feliz, pero que mal que no quieras entrenar"
+
+
 
 
 actions:
@@ -145,7 +165,8 @@ actions:
   - action_reaccionar_emocion
   - action_solicitar_emocion_libre
 
-
+  - action_guardar_contexto
+  - action_recuperar_contexto
 
 
   - action_get_telegram_id

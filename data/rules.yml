@@ -2,6 +2,26 @@ version: "3.1"
 
 rules:
 
+- rule: Manejar_Cambio_Tema_Emocion
+  condition:
+    - slot_was_set:
+        - ultimo_tema: "preguntando_emocion"  # Cambiado a ultimo_tema
+  steps:
+    - intent: cambiar_tema
+    - action: action_guardar_contexto
+    - slot_was_set:
+        - tema_interrumpido: true
+    - action: utter_preguntar_continuar  # Mensaje con botones
+
+
+
+
+
+- rule: Fallback por baja confianza
+  steps:
+    - intent: nlu_fallback
+    - action: utter_default
+
 
 - rule: botones muestrame
   steps:
@@ -9,10 +29,6 @@ rules:
     - action: utter_botones
 
 
-- rule: Fallback por baja confianza
-  steps:
-    - intent: nlu_fallback
-    - action: utter_default
 
 
 

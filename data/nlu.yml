@@ -2,9 +2,48 @@ version: "3.1"
 
 nlu:
 
+
+- intent: expresar_emocion
+  examples: |
+    - 😄 [feliz](emotion)
+    - [feliz](emotion)
+    - 😌 [tranquilo](emotion)
+    - [tranquilo](emotion)
+    - 😍 [emocionado](emotion)
+    - [emocionado](emotion)
+    - 😢 [triste](emotion)
+    - [triste](emotion)
+    - 😟 [ansioso](emotion)
+    - [ansioso](emotion)
+    - 😡 [enojado](emotion)
+    - [enojado](emotion)
+    - 😔 [inseguro](emotion)
+    - [inseguro](emotion)
+    - 😴 [cansado](emotion)
+    - [cansado](emotion)
+    - 😐 [neutral](emotion)
+    - [neutral](emotion)
+
+
+
+- intent: cambiar_tema  # Nuevo intent para interrupciones
+  examples: |
+    - mejor hablemos de otra cosa
+    - cambiemos de tema
+    - no quiero hablar de esto ahora
+    - prefiero hablar de [deportes](tipo_consejo)
+    - me aburrió este tema
+
+- intent: continuar  # Nuevo intent para retomar
+  examples: |
+    - volvamos a lo anterior
+    - continúa con lo que decías
+    - retomemos
+    - sí, termina lo que íbamos
+    - no, mejor sigue con lo otro
+
 - intent: traer_botones
   examples: |
-    - ejemplo botones
     - mostrar botones
 
 
@@ -66,15 +105,13 @@ nlu:
 
 - intent: consulta_ayuda
   examples: |
-    - ¿Me puedes ayudar?
+    - ¿Puedes ayudarme?
     - Necesito ayuda
-    - ¿Qué puedo hacer?
-    - No sé cómo manejar esto
-    - ¿Tienes algún consejo?
-    - ¿Puedes orientarme?
-    - Me siento perdido, ¿qué hago?
-    - Ayúdame, por favor
-    - Quiero mejorar pero no sé cómo
+    - ¿Puedes ayudarme?
+    - No sé qué hacer
+    - Dame consejos
+    - ¿Qué me recomiendas?
+    - Estoy perdido
 
 - intent: iniciar_conversacion_ligera
   examples: |
@@ -126,10 +163,13 @@ nlu:
 
 - intent: afirmar
   examples: |
-    - sí
-    - claro
-    - exacto
-    - por supuesto
+    - Sí
+    - Claro
+    - Por favor
+    - Así es
+    - Correcto
+    - Dale
+    - ¡Sí!
 
 
 - intent: negar
@@ -145,18 +185,8 @@ nlu:
 
 # Nuevos intents complementados
 
-- intent: expresar_emocion
-  examples: |
-    - 😊 Feliz
-    - 😔 Triste
-    - me siento feliz
-    - estoy triste
-    - me siento cansado
-    - estoy ansioso
-    - estoy enojado
-    - me siento [feliz](emocion)
-    - me siento [triste](emocion)
-    - estoy [cansado](emocion)
+
+    
 
 - intent: escribir_emocion_manual
   examples: |

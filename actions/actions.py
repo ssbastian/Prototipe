@@ -17,37 +17,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
-from actions.db import guardarUsuario
-#
-#
-
-# class ActionSetName(Action):
-#     def name(self) -> Text:
-#         return "action_set_name"
-
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-#         # 1. Intentar obtener la entidad directamente (ideal)
-#         name = next(tracker.get_latest_entity_values("person_name"), None)
-
-#         if name:
-#             return [SlotSet("name", name)]
-
-#         # 2. Fallback: intentar inferir el nombre desde el texto libre
-#         text = tracker.latest_message.get('text', '').lower()
-
-#         posibles_prefix = ["me llamo", "soy", "mi nombre es", "me dicen", "puedes llamarme"]
-#         for prefix in posibles_prefix:
-#             if prefix in text:
-#                 posible_nombre = text.split(prefix)[-1].strip().title()
-#                 if posible_nombre:
-#                     return [SlotSet("name", posible_nombre)]
-
-#         # 3. Si no se puede obtener nada
-#         dispatcher.utter_message("No pude entender tu nombre. ¿Podrías decirme cómo te llamas?")
-#         return []
+#from actions.db import guardarUsuario
 
 
 
@@ -76,23 +46,7 @@ class ActionGuardarNombre(Action):
             SlotSet("usuario_nuevo", False)
         ]
 
-
-
-# class ActionPreguntarEmocion(Action):
-#     def name(self):
-#         return "action_preguntar_emocion"
-
-#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-#         buttons = [
-#             {"title": "😊 Feliz", "payload": '/expresar_emocion{"emocion": "feliz"}'},
-#             {"title": " Triste", "payload": '/expresar_emocion{"emocion": "triste"}'},
-#             {"title": "😣 Ansioso", "payload": '/expresar_emocion{"emocion": "ansioso"}'},
-#             {"title": "😴 Cansado", "payload": '/expresar_emocion{"emocion": "cansado"}'},
-#         ]
-       
-#         dispatcher.utter_message(text="¿Cómo te sientes hoy?\nSelecciona una de las opciones o escribe como te sientes", buttons=buttons,buttons=buttons, button_type="reply")
-#         return []
-    
+ 
 class ActionPreguntarEmocion(Action):
     def name(self):
         return "action_preguntar_emocion"
@@ -130,6 +84,7 @@ class ActionPreguntarEmocion(Action):
         
         return []
     
+    
 class ActionReaccionarEmocion(Action):
     def name(self) -> str:
         return "action_reaccionar_emocion"
@@ -137,29 +92,70 @@ class ActionReaccionarEmocion(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
         emocion_registrada = tracker.get_slot("emocion_registrada")
         emocion = tracker.get_slot("emocion")
-
+        print(f"Emoción detectada: {emocion}")
         # if emocion_registrada:
         #     dispatcher.utter_message(text="Ya registré cómo te sientes 😊. Gracias.")
         #     return []
-
+        if not emocion:
+            dispatcher.utter_message(text="No he detectado ninguna emoción. Por favor, usa los botones para expresar cómo te sientes.")
+            return []
         # Reaccionar según la emoción
         if emocion == "feliz":
-            dispatcher.utter_message(text="¡Qué alegría saber que estás feliz!")
+            dispatcher.utter_message(text="¡Qué alegría saber que estás feliz! 😄 Me encanta escucharlo.")
+        elif emocion == "tranquilo":
+            dispatcher.utter_message(text="Qué bueno que te sientas tranquilo. Disfruta de ese momento de calma. 🌿")
+        elif emocion == "emocionado":
+            dispatcher.utter_message(text="¡Eso suena emocionante! Cuéntame más sobre lo que te tiene así. 🎉")
         elif emocion == "triste":
-            dispatcher.utter_message(text="Lamento que estés triste. Estoy aquí para escucharte. 😢")
+            dispatcher.utter_message(text="Lamento que estés triste. Si quieres, podemos hablar de lo que te preocupa. 💙")
         elif emocion == "ansioso":
-            dispatcher.utter_message(text="Respira profundo. Vamos paso a paso, estoy contigo. 💙")
+            dispatcher.utter_message(text="Entiendo que te sientas ansioso. Respira profundo, aquí estoy para acompañarte. 🌸")
+        elif emocion == "enojado":
+            dispatcher.utter_message(text="Entiendo que estés enojado. Si quieres, podemos buscar una forma de canalizarlo. 😡")
+        elif emocion == "inseguro":
+            dispatcher.utter_message(text="Es normal sentirse inseguro a veces. Recuerda que puedes contar conmigo. 🤝")
         elif emocion == "cansado":
-            dispatcher.utter_message(text="Descansar es importante. ¿Quieres hablar un poco o prefieres relajarte? 😴")
+            dispatcher.utter_message(text="Parece que necesitas un descanso. ¿Quieres relajarte un rato? 😴")
+        elif emocion == "neutral":
+            dispatcher.utter_message(text="Está bien sentirse neutral. Si quieres, podemos charlar para cambiar un poco el ánimo. 🙂")
         else:
-            dispatcher.utter_message(text="Gracias por compartir cómo te sientes.")
+            dispatcher.utter_message(text="Gracias por compartir cómo te sientes. Estoy aquí para escucharte. 💬")
 
 
-        dispatcher.utter_message(response="utter_opciones_post_emocion")
+
+        #dispatcher.utter_message(response="utter_opciones_post_emocion")
 
         # ✅ Activar la bandera
         return [SlotSet("emocion_registrada", True)]
 
+
+
+
+
+
+class ActionGuardarContexto(Action):
+    def name(self) -> Text:
+        return "action_guardar_contexto"
+
+    def run(self, dispatcher, tracker, domain):
+        ultimo_tema = tracker.get_slot("ultimo_tema")
+        return [
+            SlotSet("ultimo_tema_guardado", ultimo_tema),  # Backup
+            SlotSet("tema_interrumpido", True)
+        ]
+
+class ActionRecuperarContexto(Action):
+    def name(self) -> Text:
+        return "action_recuperar_contexto"
+
+    def run(self, dispatcher, tracker, domain):
+        ultimo_tema = tracker.get_slot("ultimo_tema_guardado")
+        return [
+            SlotSet("ultimo_tema", ultimo_tema),
+            SlotSet("tema_interrumpido", False)
+        ]
+        
+        
 
 class ActionSolicitarEmocionLibre(Action):
     def name(self) -> str:
@@ -168,6 +164,26 @@ class ActionSolicitarEmocionLibre(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
         dispatcher.utter_message(text="Claro, cuéntame con tus propias palabras cómo te sientes.")
         return []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -188,6 +204,28 @@ class ActionGetTelegramId(Action):
         #Guardar el id en un slot si es necesario
         return [SlotSet("user_telegram_id", user_id)]
 
+
+
+
+
+
+
+
+
+# class ActionPreguntarEmocion(Action):
+#     def name(self):
+#         return "action_preguntar_emocion"
+
+#     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
+#         buttons = [
+#             {"title": "😊 Feliz", "payload": '/expresar_emocion{"emocion": "feliz"}'},
+#             {"title": " Triste", "payload": '/expresar_emocion{"emocion": "triste"}'},
+#             {"title": "😣 Ansioso", "payload": '/expresar_emocion{"emocion": "ansioso"}'},
+#             {"title": "😴 Cansado", "payload": '/expresar_emocion{"emocion": "cansado"}'},
+#         ]
+       
+#         dispatcher.utter_message(text="¿Cómo te sientes hoy?\nSelecciona una de las opciones o escribe como te sientes", buttons=buttons,buttons=buttons, button_type="reply")
+#         return []
 
 """ class ActionSimularConversacion(Action):
     def name(self) -> Text:

@@ -2,17 +2,20 @@ version: "3.1"
 
 stories:
 
-  #SALUDOS
+  ## SALUDOS
   - story: flujo de saludo nuevo usuario
     steps:
       - intent: saludo
       - slot_was_set:
           - usuario_nuevo: true
+          - ultimo_tema: "preguntando_nombre"  # Nuevo slot
       - action: utter_pedir_nombre
       - intent: dar_nombre
         entities:
           - person_name: "Sebastián"
       - action: action_guardar_nombre
+      - slot_was_set:
+          - ultimo_tema: "preguntando_emocion"  # Actualización
       - action: action_preguntar_emocion
 
   - story: flujo de saludo usuario conocido
@@ -20,30 +23,153 @@ stories:
       - intent: saludo
       - slot_was_set:
           - usuario_nuevo: false
+          - ultimo_tema: "preguntando_emocion"  # Nuevo slot
       - action: utter_saludo_con_nombre
-      - action: action_preguntar_emocion
+      - action: action_preguntar_emocion # muestra botones de emociones
 
-#Reaccion a emociones y acción dependiendo del estado de animo 
-  - story: reaccion emocion + ayuda
-    steps:
-      - intent: expresar_emocion
-      - action: action_reaccionar_emocion
-      - intent: consulta_ayuda
-      - action: utter_ofrecer_ayuda
 
-  - story: reaccion emocion + charla ligera
-    steps:
-      - intent: expresar_emocion
-      - action: action_reaccionar_emocion
-      - intent: iniciar_conversacion_ligera
-      - action: utter_iniciar_conversacion_ligera
 
-  - story: reaccion emocion + consejo social
+## MANEJO DE EMOCIONES
+
+
+  - story: reaccion_afirmativa_triste
     steps:
-      - intent: expresar_emocion
-      - action: action_reaccionar_emocion
-      - intent: consejos_sociales
-      - action: utter_consejos_sociales
+      - intent: expresar_emocion # Usuario expresa una emoción😡
+      - action: action_reaccionar_emocion # action con el else
+      - slot_was_set:
+              - emocion: ["triste", "ansioso", "cansado"]  # Varias emociones
+      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+      - intent: afirmar # USUARIO dice "Sí" a ayuda
+      - action: utter_test_afirmar # Respuesta alternativa
+
+  - story: reaccion_negativa_triste
+    steps:
+      - intent: expresar_emocion # Usuario expresa una emoción😡
+      - action: action_reaccionar_emocion # action con el else
+      - slot_was_set:
+              - emocion: ["triste", "ansioso", "cansado"]  # Varias emociones
+      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+      - intent: negar # USUARIO dice "No" a ayuda
+      - action: utter_test_negar # Respuesta alternativa
+
+  - story: reaccion_afirmativa_feliz
+    steps:
+      - intent: expresar_emocion # Usuario 
+      - action: action_reaccionar_emocion # action con el else
+      - slot_was_set:
+              - emocion: ["feliz", "tranquilo", "emocionado"]  # Varias emociones
+      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+      - intent: afirmar # USUARIO dice "Sí" a ayuda
+      - action: utter_test_feliz_afirmar # Respuesta alternativa
+
+  
+  - story: reaccion_negativa_feliz
+    steps:
+      - intent: expresar_emocion # Usuario 
+      - action: action_reaccionar_emocion # action con el else
+      - slot_was_set:
+              - emocion: ["feliz", "tranquilo", "emocionado"]  # Varias emociones
+      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+      - intent: negar # USUARIO dice "Sí" a ayuda
+      - action: utter_test_feliz_negar # Respuesta alternativa
+  
+
+# 
+
+
+
+  #   - story: usuario_cambia_emocion
+  #     steps:
+  #       - intent: expresar_emocion
+  #         entities:
+  #           - emotion: "feliz"
+  #       - action: action_reaccionar_emocion
+  #       - intent: expresar_emocion  # Cambia a otra emoción
+  #         entities:
+  #           - emotion: "triste"
+  #       - action: action_reaccionar_emocion
+
+  # # ========================================
+  # # CASOS ESPECIALES (Ansiedad/Tristeza)
+  # # ========================================
+  #   - story: manejo_ansiedad_profundo
+  #     steps:      
+  #       - intent: expresar_emocion
+  #         entities:
+  #           - emotion: "ansioso"
+  #       - action: action_reaccionar_emocion
+  #       - intent: afirmar  # Usuario dice "Sí" a ayuda
+  #       - action: action_guia_respiracion  # Ejercicio práctico
+
+
+  #   - story: manejo_tristeza_profundo
+  #     steps:
+  #       - intent: expresar_emocion
+  #         entities:
+  #           - emotion: "triste"
+  #       - action: action_reaccionar_emocion
+  #       - intent: afirmar
+  #       - action: utter_ofrecer_recursos  # "¿Te gustaría hablar con un profesional?"
+
+
+
+# #REACCIONES A EMOCIONES
+#   - story: reaccion emocion + ayuda
+#     steps:
+#       - intent: expresar_emocion
+#       - slot_was_set:
+#           - ultimo_tema: "procesando_emocion"  # Nuevo slot
+#       - action: action_reaccionar_emocion
+#       - intent: consulta_ayuda
+#       - action: utter_ofrecer_ayuda
+#       - slot_was_set:
+#           - tema_interrumpido: false  # Confirmación
+
+# - story: reaccion emocion + ayuda
+#   steps:
+#     - intent: expresar_emocion
+#     - action: action_reaccionar_emocion
+#     - intent: consulta_ayuda
+#     - action: utter_ofrecer_ayuda
+
+
+
+
+
+
+
+
+
+  # NUEVAS HISTORIAS PARA INTERRUPCIONES
+  # - story: interrupcion_durante_emocion
+  #   steps:
+  #     - intent: expresar_emocion
+  #     - slot_was_set:
+  #         - ultimo_tema: "procesando_emocion"
+  #     - intent: cambiar_tema  # Ej: "Mejor hablemos de otra cosa"
+  #     - action: action_guardar_contexto
+  #     - slot_was_set:
+  #         - tema_interrumpido: true
+  #     - action: utter_preguntar_continuar
+  #     - intent: continuar
+  #     - action: action_recuperar_contexto
+  #     - action: utter_opciones_post_emocion  # Retoma donde quedó
+
+
+
+  # - story: reaccion emocion + charla ligera
+  #   steps:
+  #     - intent: expresar_emocion
+  #     - action: action_reaccionar_emocion
+  #     - intent: iniciar_conversacion_ligera
+  #     - action: utter_iniciar_conversacion_ligera
+
+  # - story: reaccion emocion + consejo social
+  #   steps:
+  #     - intent: expresar_emocion
+  #     - action: action_reaccionar_emocion
+  #     - intent: consejos_sociales
+  #     - action: utter_consejos_sociales
 
 
   # - story: flujo de conversación empática inicial
