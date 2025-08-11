@@ -28,6 +28,7 @@ pipeline:
 
 policies:
 - name: RulePolicy
+  priority: 5 
   core_fallback_threshold: 0.3
   enable_fallback_prediction: true
   restrict_rules: false

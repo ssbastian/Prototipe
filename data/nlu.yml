@@ -24,6 +24,13 @@ nlu:
     - 😐 [neutral](emotion)
     - [neutral](emotion)
 
+- intent: afirmar_ayuda_emocion
+  examples: |
+     - /afirmar_ayuda_emocion
+
+- intent: negar_ayuda_emocion
+  examples: |
+    - /negar_ayuda_emocion
 
 
 - intent: cambiar_tema  # Nuevo intent para interrupciones

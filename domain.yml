@@ -4,24 +4,26 @@ intents:
   - saludo
   - dar_nombre
   - expresar_emocion
-  - escribir_emocion_manual
+  - escribir_emocion_manual # no 
   - consulta_ayuda
-  - iniciar_conversacion_ligera
+  - iniciar_conversacion_ligera #no
   - consejos_sociales
 
-  - afirmar
-  - negar
+  - afirmar #no
+  - negar # no 
+  - afirmar_ayuda_emocion
+  - negar_ayuda_emocion
 
-  - traer_botones
-  - cambiar_tema
-  - continuar
+  - traer_botones # no 
+  - cambiar_tema # no 
+  - continuar # no 
 
 
 entities:
   - person_name
   - emotion
 
-  - situacion_social
+  - situacion_social # no 
   - tipo_consejo
   - actividad
   - tiempo
@@ -54,6 +56,13 @@ slots:
   #para recordar temas
   emocion_registrada:
     type: bool
+    initial_value: false
+    influence_conversation: false
+    mappings: 
+      - type: custom
+
+  ayuda_recomendada:
+    type: text
     initial_value: false
     influence_conversation: false
     mappings: 
@@ -156,6 +165,8 @@ responses:
     - text: "¡que bueno que estes feliz, pero que mal que no quieras entrenar"
 
 
+  utter_ok_sin_ayuda:
+    - text: "Perfecto 👍, entonces seguimos conversando de lo que quieras."
 
 
 actions:
@@ -163,7 +174,9 @@ actions:
   - action_guardar_nombre
   - action_preguntar_emocion
   - action_reaccionar_emocion
+  - action_reaccionar_emocion2
   - action_solicitar_emocion_libre
+  - action_ofrecer_ayuda
 
   - action_guardar_contexto
   - action_recuperar_contexto

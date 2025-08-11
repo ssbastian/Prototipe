@@ -14,8 +14,9 @@
 #
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, FollowupAction, UserUtteranceReverted
 from rasa_sdk.executor import CollectingDispatcher
+
 
 #from actions.db import guardarUsuario
 
@@ -121,14 +122,88 @@ class ActionReaccionarEmocion(Action):
         else:
             dispatcher.utter_message(text="Gracias por compartir cómo te sientes. Estoy aquí para escucharte. 💬")
 
-
-
         #dispatcher.utter_message(response="utter_opciones_post_emocion")
 
         # ✅ Activar la bandera
         return [SlotSet("emocion_registrada", True)]
 
 
+
+class ActionReaccionarEmocion2(Action):
+    def name(self) -> str:
+        return "action_reaccionar_emocion2"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        emocion = tracker.get_slot("emocion")
+        respuesta = ""
+        ayuda_recomendada = None
+
+        negativas = ["triste", "ansioso", "enojado", "cansado", "inseguro"]
+        positivas = ["feliz", "tranquilo", "emocionado", "neutral"]
+
+        if not emocion:
+            dispatcher.utter_message(text="No he detectado ninguna emoción. Por favor, usa los botones para expresar cómo te sientes.")
+            return []
+
+        if emocion in negativas:
+            # Emociones negativas
+            ayuda_recomendada = "negativa"
+            if emocion == "triste":
+                respuesta = "Lamento que estés triste. Si quieres, podemos hablar de lo que te preocupa. 💙"
+            elif emocion == "ansioso":
+                respuesta = "Entiendo que te sientas ansioso. Respira profundo, aquí estoy para acompañarte. 🌸"
+            elif emocion == "enojado":
+                respuesta = "Entiendo que estés enojado. Si quieres, podemos buscar una forma de canalizarlo. 😡"
+            elif emocion == "cansado":
+                respuesta = "Parece que necesitas un descanso. ¿Quieres relajarte un rato? 😴"
+            elif emocion == "inseguro":
+                respuesta = "Es normal sentirse inseguro a veces. Recuerda que puedes contar conmigo. 🤝"
+        elif emocion in positivas:
+            # Emociones positivas o neutras
+            ayuda_recomendada = "positiva"
+            if emocion == "feliz":
+                respuesta = "¡Qué alegría saber que estás feliz! 😄 Me encanta escucharlo."
+            elif emocion == "tranquilo":
+                respuesta = "Qué bueno que te sientas tranquilo. Disfruta de ese momento de calma. 🌿"
+            elif emocion == "emocionado":
+                respuesta = "¡Eso suena emocionante! Cuéntame más sobre lo que te tiene así. 🎉"
+            elif emocion == "neutral":
+                respuesta = "Está bien sentirse neutral. Si quieres, podemos charlar para cambiar un poco el ánimo. 🙂"
+            else:
+                respuesta = "Gracias por compartir cómo te sientes. Estoy aquí para escucharte. 💬"
+
+        dispatcher.utter_message(text=respuesta)
+                # Preguntar si quiere ayuda, con botones
+        dispatcher.utter_message(
+            text="¿Quieres que te recomiende algo para este momento?",
+            buttons = [
+                {"title": "Sí, por favor", "payload": "/afirmar_ayuda_emocion"},
+                {"title": "No, gracias", "payload": "/negar_ayuda_emocion"}
+            ], button_type="reply" 
+        )
+        # return [
+        #     SlotSet("ayuda_recomendada", ayuda_recomendada),
+        #     FollowupAction("action_ofrecer_ayuda"),
+        # ]
+        return [SlotSet("ayuda_recomendada", ayuda_recomendada)]
+
+
+class ActionOfrecerAyuda(Action):
+    def name(self) -> str:
+        return "action_ofrecer_ayuda"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+
+        tipo = tracker.get_slot("ayuda_recomendada")
+
+        if tipo == "negativa":
+            dispatcher.utter_message("Puedo recomendarte técnicas de relajación o ejercicios para sentirte mejor. 💡")
+        elif tipo == "positiva":
+            dispatcher.utter_message("¡Me alegra verte bien! Si quieres, puedo sugerirte actividades para mantener ese ánimo. ✨")
+        else:
+            dispatcher.utter_message("No tengo claro qué tipo de ayuda ofrecer, pero podemos hablar de lo que quieras. 🤝")
+
+        return [UserUtteranceReverted()] #para que no se dispare la regla de baja confianza
 
 
 

@@ -17,6 +17,9 @@ stories:
       - slot_was_set:
           - ultimo_tema: "preguntando_emocion"  # Actualización
       - action: action_preguntar_emocion
+      - intent: expresar_emocion
+      - action: action_reaccionar_emocion2
+
 
   - story: flujo de saludo usuario conocido
     steps:
@@ -26,52 +29,64 @@ stories:
           - ultimo_tema: "preguntando_emocion"  # Nuevo slot
       - action: utter_saludo_con_nombre
       - action: action_preguntar_emocion # muestra botones de emociones
+      - intent: expresar_emocion
+      - action: action_reaccionar_emocion2
 
 
 
 ## MANEJO DE EMOCIONES
 
-
-  - story: reaccion_afirmativa_triste
+  - story: usuario acepta ayuda en emoción
     steps:
-      - intent: expresar_emocion # Usuario expresa una emoción😡
-      - action: action_reaccionar_emocion # action con el else
-      - slot_was_set:
-              - emocion: ["triste", "ansioso", "cansado"]  # Varias emociones
-      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
-      - intent: afirmar # USUARIO dice "Sí" a ayuda
-      - action: utter_test_afirmar # Respuesta alternativa
+      - intent: afirmar_ayuda_emocion
+      - action: action_ofrecer_ayuda
 
-  - story: reaccion_negativa_triste
+  - story: usuario rechaza ayuda en emoción
     steps:
-      - intent: expresar_emocion # Usuario expresa una emoción😡
-      - action: action_reaccionar_emocion # action con el else
-      - slot_was_set:
-              - emocion: ["triste", "ansioso", "cansado"]  # Varias emociones
-      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
-      - intent: negar # USUARIO dice "No" a ayuda
-      - action: utter_test_negar # Respuesta alternativa
+      - intent: negar_ayuda_emocion
+      - action: utter_ok_sin_ayuda
 
-  - story: reaccion_afirmativa_feliz
-    steps:
-      - intent: expresar_emocion # Usuario 
-      - action: action_reaccionar_emocion # action con el else
-      - slot_was_set:
-              - emocion: ["feliz", "tranquilo", "emocionado"]  # Varias emociones
-      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
-      - intent: afirmar # USUARIO dice "Sí" a ayuda
-      - action: utter_test_feliz_afirmar # Respuesta alternativa
+
+  # - story: reaccion_afirmativa_triste
+  #   steps:
+  #     - intent: expresar_emocion # Usuario expresa una emoción😡
+  #     - action: action_reaccionar_emocion # action con el else
+  #     - slot_was_set:
+  #             - emocion: ["triste", "ansioso", "cansado"]  # Varias emociones
+  #     - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+  #     - intent: afirmar # USUARIO dice "Sí" a ayuda
+  #     - action: utter_test_afirmar # Respuesta alternativa
+
+  # - story: reaccion_negativa_triste
+  #   steps:
+  #     - intent: expresar_emocion # Usuario expresa una emoción😡
+  #     - action: action_reaccionar_emocion # action con el else
+  #     - slot_was_set:
+  #             - emocion: ["triste", "ansioso", "cansado"]  # Varias emociones
+  #     - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+  #     - intent: negar # USUARIO dice "No" a ayuda
+  #     - action: utter_test_negar # Respuesta alternativa
+
+  # - story: reaccion_afirmativa_feliz
+  #   steps:
+  #     - intent: expresar_emocion # Usuario 
+  #     - action: action_reaccionar_emocion # action con el else
+  #     - slot_was_set:
+  #             - emocion: ["feliz", "tranquilo", "emocionado"]  # Varias emociones
+  #     - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+  #     - intent: afirmar # USUARIO dice "Sí" a ayuda
+  #     - action: utter_test_feliz_afirmar # Respuesta alternativa
 
   
-  - story: reaccion_negativa_feliz
-    steps:
-      - intent: expresar_emocion # Usuario 
-      - action: action_reaccionar_emocion # action con el else
-      - slot_was_set:
-              - emocion: ["feliz", "tranquilo", "emocionado"]  # Varias emociones
-      - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
-      - intent: negar # USUARIO dice "Sí" a ayuda
-      - action: utter_test_feliz_negar # Respuesta alternativa
+  # - story: reaccion_negativa_feliz
+  #   steps:
+  #     - intent: expresar_emocion # Usuario 
+  #     - action: action_reaccionar_emocion # action con el else
+  #     - slot_was_set:
+  #             - emocion: ["feliz", "tranquilo", "emocionado"]  # Varias emociones
+  #     - action: utter_ofrecer_ayuda # Pregunta si necesita ayuda
+  #     - intent: negar # USUARIO dice "Sí" a ayuda
+  #     - action: utter_test_feliz_negar # Respuesta alternativa
   
 
 # 

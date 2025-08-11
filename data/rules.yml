@@ -2,18 +2,24 @@ version: "3.1"
 
 rules:
 
-- rule: Manejar_Cambio_Tema_Emocion
-  condition:
-    - slot_was_set:
-        - ultimo_tema: "preguntando_emocion"  # Cambiado a ultimo_tema
-  steps:
-    - intent: cambiar_tema
-    - action: action_guardar_contexto
-    - slot_was_set:
-        - tema_interrumpido: true
-    - action: utter_preguntar_continuar  # Mensaje con botones
+# - rule: Ofrecer ayuda si ayuda_recomendada es True
+#   condition:
+#     - slot_was_set:
+#         - ayuda_recomendada: true
+#   steps:
+#     - action: utter_ofrecer_ayuda
 
 
+# - rule: Manejar_Cambio_Tema_Emocion
+#   condition:
+#     - slot_was_set:
+#         - ultimo_tema: "preguntando_emocion"  # Cambiado a ultimo_tema
+#   steps:
+#     - intent: cambiar_tema
+#     - action: action_guardar_contexto
+#     - slot_was_set:
+#         - tema_interrumpido: true
+#     - action: utter_preguntar_continuar  # Mensaje con botones
 
 
 
