@@ -3,6 +3,36 @@ version: "3.1"
 nlu:
 
 
+- intent: finalizar_ejercicio # finalizar ejercicio respiracion
+  examples: |
+    - Ya terminé
+    - Listo
+    - Eso fue todo
+    - He terminado
+    - Ya acabé
+    - Finalicé
+    - Eso es todo por ahora
+    - Gracias, terminé
+    - Quiero parar
+    - No quiero continuar
+    - Ya no más
+
+- intent: paso_inhalar_listo
+  examples: |
+    - Listo, inhalé
+    - Ya inhalé
+
+- intent: paso_mantener_listo
+  examples: |
+    - Listo, mantuve
+    - Ya mantuve
+
+- intent: paso_exhalar_listo
+  examples: |
+    - Listo, exhalé
+    - Ya exhalé
+
+
 - intent: expresar_emocion
   examples: |
     - 😄 [feliz](emotion)
@@ -26,11 +56,11 @@ nlu:
 
 - intent: afirmar_ayuda_emocion
   examples: |
-     - /afirmar_ayuda_emocion
+     - afirmar_ayuda_emocion
 
 - intent: negar_ayuda_emocion
   examples: |
-    - /negar_ayuda_emocion
+    - negar_ayuda_emocion
 
 
 - intent: cambiar_tema  # Nuevo intent para interrupciones

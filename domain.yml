@@ -14,6 +14,11 @@ intents:
   - afirmar_ayuda_emocion
   - negar_ayuda_emocion
 
+    finalizar_ejercicio
+    paso_inhalar_listo
+    paso_mantener_listo
+    paso_exhalar_listo
+
   - traer_botones # no 
   - cambiar_tema # no 
   - continuar # no 
@@ -169,6 +174,21 @@ responses:
     - text: "Perfecto 👍, entonces seguimos conversando de lo que quieras."
 
 
+  utter_respetar_decision:
+    - text: "Está bien, no haremos el ejercicio de respiración. 👍"
+
+  utter_ofrecer_opciones:
+    - text: "Podemos probar otra actividad o simplemente conversar. ¿Qué prefieres?"
+      buttons:
+        - title: "Otra actividad"
+          payload: "/otra_actividad"
+        - title: "Conversar"
+          payload: "/conversar"
+  
+  utter_a:
+    - text: "¡Holaaaaaaaa"
+
+
 actions:
 
   - action_guardar_nombre
@@ -177,6 +197,12 @@ actions:
   - action_reaccionar_emocion2
   - action_solicitar_emocion_libre
   - action_ofrecer_ayuda
+  
+  #ejercicio respiracion
+  - action_ejercicio_respiracion
+  - action_ejercicio_respiracion_mantener
+  - action_ejercicio_respiracion_exhalar
+  - action_ejercicio_respiracion_final
 
   - action_guardar_contexto
   - action_recuperar_contexto

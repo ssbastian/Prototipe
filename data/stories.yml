@@ -40,6 +40,25 @@ stories:
     steps:
       - intent: afirmar_ayuda_emocion
       - action: action_ofrecer_ayuda
+      - intent: afirmar
+      - action: action_ejercicio_respiracion
+      - intent: paso_inhalar_listo
+      - action: action_ejercicio_respiracion_mantener
+      - intent: paso_mantener_listo
+      - action: action_ejercicio_respiracion_exhalar
+      - intent: paso_exhalar_listo
+      - action: action_ejercicio_respiracion_final
+      - intent: finalizar_ejercicio
+
+    # Usuario rechaza ejercicio respiracion
+    ### no se si sirva para rechazar otros
+  - story: usuario rechaza ejercicio
+    steps:
+    - intent: rechazar_ejercicio
+    - action: utter_respetar_decision
+    - action: utter_ofrecer_opciones
+
+
 
   - story: usuario rechaza ayuda en emoción
     steps:

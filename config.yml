@@ -34,6 +34,7 @@ policies:
   restrict_rules: false
 
 - name: TEDPolicy
+  constrain_similarities: true
   max_history: 10
   epochs: 250    # Mayor entrenamiento para entender mejor el flujo conversacional
   batch_size: [16, 32]

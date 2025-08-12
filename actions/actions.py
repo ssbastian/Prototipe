@@ -177,9 +177,9 @@ class ActionReaccionarEmocion2(Action):
         dispatcher.utter_message(
             text="¿Quieres que te recomiende algo para este momento?",
             buttons = [
-                {"title": "Sí, por favor", "payload": "/afirmar_ayuda_emocion"},
-                {"title": "No, gracias", "payload": "/negar_ayuda_emocion"}
-            ], button_type="reply" 
+                {"title": "Sí, por favor", "payload": "afirmar_ayuda_emocion"},
+                {"title": "No, gracias", "payload": "negar_ayuda_emocion"}
+            ], button_type="inline" 
         )
         # return [
         #     SlotSet("ayuda_recomendada", ayuda_recomendada),
@@ -188,22 +188,100 @@ class ActionReaccionarEmocion2(Action):
         return [SlotSet("ayuda_recomendada", ayuda_recomendada)]
 
 
+import requests
+import os
+
+# Guarda tu token aquí o en una variable de entorno
+TELEGRAM_TOKEN = "7109842657:AAGWrQwhcclhUG9fwLCdykK26RbsTSi4XhE"
+
 class ActionOfrecerAyuda(Action):
     def name(self) -> str:
         return "action_ofrecer_ayuda"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        # 1️⃣ Enviar mensaje rápido directo a Telegram
+        chat_id = tracker.sender_id
+        requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+            json={"chat_id": chat_id, "text": "Entendido ✅"}
+        )
 
         tipo = tracker.get_slot("ayuda_recomendada")
 
         if tipo == "negativa":
-            dispatcher.utter_message("Puedo recomendarte técnicas de relajación o ejercicios para sentirte mejor. 💡")
+            dispatcher.utter_message("Puedo recomendarte técnicas de relajación o ejercicios para sentirte mejor, ¿te parece?")
         elif tipo == "positiva":
             dispatcher.utter_message("¡Me alegra verte bien! Si quieres, puedo sugerirte actividades para mantener ese ánimo. ✨")
         else:
             dispatcher.utter_message("No tengo claro qué tipo de ayuda ofrecer, pero podemos hablar de lo que quieras. 🤝")
 
-        return [UserUtteranceReverted()] #para que no se dispare la regla de baja confianza
+        # return [UserUtteranceReverted()] #para que no se dispare la regla de baja confianza
+        return []
+
+
+class ActionEjercicioRespiracion(Action):
+    def name(self) -> str:
+        return "action_ejercicio_respiracion"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        # Paso 1: Introducción y primer paso
+        dispatcher.utter_message(
+            text="Vamos a hacer un ejercicio de respiración 4-4-4 para calmar la ansiedad.\n\nInhala profundo contando hasta 4...",
+            buttons=[{"title": "Listo, inhalé", "payload": "/paso_inhalar_listo"}]
+        )
+        # El siguiente paso se debe manejar con una intent y acción asociada a /paso_inhalar_listo
+        return []
+
+# Acción para el segundo paso del ejercicio
+class ActionEjercicioRespiracionMantener(Action):
+    def name(self) -> str:
+        return "action_ejercicio_respiracion_mantener"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        dispatcher.utter_message(
+            text="¡Muy bien! Ahora mantén la respiración contando hasta 4...",
+            buttons=[{"title": "Listo, mantuve", "payload": "/paso_mantener_listo"}]
+        )
+        return []
+
+# Acción para el tercer paso del ejercicio
+class ActionEjercicioRespiracionExhalar(Action):
+    def name(self) -> str:
+        return "action_ejercicio_respiracion_exhalar"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        dispatcher.utter_message(
+            text="¡Perfecto! Ahora exhala lentamente contando hasta 4...",
+            buttons=[{"title": "Listo, exhalé", "payload": "/paso_exhalar_listo"}]
+        )
+        return []
+
+# Acción para finalizar el ejercicio
+class ActionEjercicioRespiracionFinal(Action):
+    def name(self) -> str:
+        return "action_ejercicio_respiracion_final"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        dispatcher.utter_message(
+            text="¡Excelente! Has completado un ciclo de respiración 4-4-4. Puedes repetirlo tres veces para sentirte aún mejor. ¿Cómo te sientes ahora? 😊"
+        )
+        return []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
