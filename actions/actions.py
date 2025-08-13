@@ -1,14 +1,6 @@
-
-
-
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
 # See this guide on how to implement these action:
 # https://rasa.com/docs/rasa/custom-actions
 
-
-# This is a simple example for a custom action which utters "Hello World!"
 
 # from typing import Any, Text, Dict, List
 #
@@ -86,46 +78,6 @@ class ActionPreguntarEmocion(Action):
         return []
     
     
-class ActionReaccionarEmocion(Action):
-    def name(self) -> str:
-        return "action_reaccionar_emocion"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
-        emocion_registrada = tracker.get_slot("emocion_registrada")
-        emocion = tracker.get_slot("emocion")
-        print(f"Emoción detectada: {emocion}")
-        # if emocion_registrada:
-        #     dispatcher.utter_message(text="Ya registré cómo te sientes 😊. Gracias.")
-        #     return []
-        if not emocion:
-            dispatcher.utter_message(text="No he detectado ninguna emoción. Por favor, usa los botones para expresar cómo te sientes.")
-            return []
-        # Reaccionar según la emoción
-        if emocion == "feliz":
-            dispatcher.utter_message(text="¡Qué alegría saber que estás feliz! 😄 Me encanta escucharlo.")
-        elif emocion == "tranquilo":
-            dispatcher.utter_message(text="Qué bueno que te sientas tranquilo. Disfruta de ese momento de calma. 🌿")
-        elif emocion == "emocionado":
-            dispatcher.utter_message(text="¡Eso suena emocionante! Cuéntame más sobre lo que te tiene así. 🎉")
-        elif emocion == "triste":
-            dispatcher.utter_message(text="Lamento que estés triste. Si quieres, podemos hablar de lo que te preocupa. 💙")
-        elif emocion == "ansioso":
-            dispatcher.utter_message(text="Entiendo que te sientas ansioso. Respira profundo, aquí estoy para acompañarte. 🌸")
-        elif emocion == "enojado":
-            dispatcher.utter_message(text="Entiendo que estés enojado. Si quieres, podemos buscar una forma de canalizarlo. 😡")
-        elif emocion == "inseguro":
-            dispatcher.utter_message(text="Es normal sentirse inseguro a veces. Recuerda que puedes contar conmigo. 🤝")
-        elif emocion == "cansado":
-            dispatcher.utter_message(text="Parece que necesitas un descanso. ¿Quieres relajarte un rato? 😴")
-        elif emocion == "neutral":
-            dispatcher.utter_message(text="Está bien sentirse neutral. Si quieres, podemos charlar para cambiar un poco el ánimo. 🙂")
-        else:
-            dispatcher.utter_message(text="Gracias por compartir cómo te sientes. Estoy aquí para escucharte. 💬")
-
-        #dispatcher.utter_message(response="utter_opciones_post_emocion")
-
-        # ✅ Activar la bandera
-        return [SlotSet("emocion_registrada", True)]
 
 
 
@@ -218,6 +170,9 @@ class ActionOfrecerAyuda(Action):
         # return [UserUtteranceReverted()] #para que no se dispare la regla de baja confianza
         return []
 
+#==========
+# Ejercicios para acciones Negativas
+#=============
 
 class ActionEjercicioRespiracion(Action):
     def name(self) -> str:
@@ -268,8 +223,40 @@ class ActionEjercicioRespiracionFinal(Action):
         return []
 
 
+#EJERCICIO 2
+class ActionEjercicioMeditacion(Action):
+    def name(self) -> str:
+        return "action_meditacion_guiada"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message(text=(
+            "Perfecto 🧘\n"
+            "Vamos a hacer una meditación guiada breve.\n\n"
+            "1️⃣ Siéntate cómodo y cierra los ojos.\n"
+            "2️⃣ Inhala profundamente por la nariz contando hasta 4.\n"
+            "3️⃣ Siente cómo tu cuerpo se relaja con cada exhalación.\n"
+            "4️⃣ Imagina un lugar tranquilo y seguro.\n\n"
+            "Dedica 2–3 minutos a respirar y visualizar. Cuando termines, dime 'Listo'."
+        ))
+        return []
 
 
+#EJERCICIO 3
+class ActionEjercicioEscritura(Action):
+    def name(self) -> str:
+        return "action_Escritura_guiada"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message(text=(
+            "Genial ✍ Vamos a escribir.\n\n"
+            "Toma papel o abre una nota en tu teléfono.\n"
+            "Escribe durante 5 minutos respondiendo:\n"
+            "💭 ¿Qué siento ahora mismo?\n"
+            "📌 ¿Qué ha pasado hoy que pueda haber influido en mi emoción?\n"
+            "🙏 Algo por lo que me sienta agradecido.\n\n"
+            "Cuando termines, dime 'Listo'."
+        ))
+        return []
 
 
 
@@ -400,15 +387,99 @@ class ActionGuiaRespiracion(Action):  # ¡Antes decía "respiracion" sin "a"!
         return []
  """
 
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
+
+
+""" class ActionReaccionarEmocion(Action):
+    def name(self) -> str:
+        return "action_reaccionar_emocion"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> List[Dict]:
+        emocion_registrada = tracker.get_slot("emocion_registrada")
+        emocion = tracker.get_slot("emocion")
+        print(f"Emoción detectada: {emocion}")
+        # if emocion_registrada:
+        #     dispatcher.utter_message(text="Ya registré cómo te sientes 😊. Gracias.")
+        #     return []
+        if not emocion:
+            dispatcher.utter_message(text="No he detectado ninguna emoción. Por favor, usa los botones para expresar cómo te sientes.")
+            return []
+        # Reaccionar según la emoción
+        if emocion == "feliz":
+            dispatcher.utter_message(text="¡Qué alegría saber que estás feliz! 😄 Me encanta escucharlo.")
+        elif emocion == "tranquilo":
+            dispatcher.utter_message(text="Qué bueno que te sientas tranquilo. Disfruta de ese momento de calma. 🌿")
+        elif emocion == "emocionado":
+            dispatcher.utter_message(text="¡Eso suena emocionante! Cuéntame más sobre lo que te tiene así. 🎉")
+        elif emocion == "triste":
+            dispatcher.utter_message(text="Lamento que estés triste. Si quieres, podemos hablar de lo que te preocupa. 💙")
+        elif emocion == "ansioso":
+            dispatcher.utter_message(text="Entiendo que te sientas ansioso. Respira profundo, aquí estoy para acompañarte. 🌸")
+        elif emocion == "enojado":
+            dispatcher.utter_message(text="Entiendo que estés enojado. Si quieres, podemos buscar una forma de canalizarlo. 😡")
+        elif emocion == "inseguro":
+            dispatcher.utter_message(text="Es normal sentirse inseguro a veces. Recuerda que puedes contar conmigo. 🤝")
+        elif emocion == "cansado":
+            dispatcher.utter_message(text="Parece que necesitas un descanso. ¿Quieres relajarte un rato? 😴")
+        elif emocion == "neutral":
+            dispatcher.utter_message(text="Está bien sentirse neutral. Si quieres, podemos charlar para cambiar un poco el ánimo. 🙂")
+        else:
+            dispatcher.utter_message(text="Gracias por compartir cómo te sientes. Estoy aquí para escucharte. 💬")
+
+        #dispatcher.utter_message(response="utter_opciones_post_emocion")
+
+        # ✅ Activar la bandera
+        return [SlotSet("emocion_registrada", True)] """
+    
+    
+    
+    
+    
+import requests
+
+class ActionLlama2Response(Action):
+    def name(self):
+        return "action_llama2_response"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: dict):
+        
+        user_message = tracker.latest_message.get('text')
+        
+        # Añade instrucciones al prompt para respuestas breves
+        optimized_prompt = f"""
+        Responde de forma muy breve (máximo 10 palabras) y directa, ideal para un mensaje de Telegram.
+        Pregunta: {user_message}
+        Respuesta concisa:
+        """
+        
+        try:
+            response = requests.post(
+                'http://localhost:11434/api/generate',
+                headers={'Content-Type': 'application/json'},
+                json={
+                    "model": "llama2:7b",  # O usa "mistral" para más velocidad
+                    "prompt": optimized_prompt,  # Prompt modificado
+                    "stream": False,
+                    "options": {
+                        "max_tokens": 30,  # Limita la longitud de la respuesta
+                        "temperature": 0.3  # Reduce la creatividad (respuestas más precisas)
+                    }
+                },
+                timeout=15  # Timeout ajustado para respuestas rápidas
+            )
+            
+            if response.status_code == 200:
+                answer = response.json().get("response", "No response").strip()
+                # Acorta la respuesta por si acaso
+                answer = ' '.join(answer.split()[:12])  # Máximo 12 palabras
+            else:
+                answer = "⚠️ Error, intenta más tarde."
+                
+        except requests.exceptions.Timeout:
+            answer = "⌛ El modelo no respondió a tiempo. Reformula tu pregunta."
+        except Exception as e:
+            answer = "🔌 Error de conexión."
+        
+        dispatcher.utter_message(text=answer)
+        return []

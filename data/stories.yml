@@ -9,10 +9,11 @@ stories:
       - slot_was_set:
           - usuario_nuevo: true
           - ultimo_tema: "preguntando_nombre"  # Nuevo slot
+      - action: utter_presentarse
       - action: utter_pedir_nombre
       - intent: dar_nombre
         entities:
-          - person_name: "Sebastián"
+          - person_name
       - action: action_guardar_nombre
       - slot_was_set:
           - ultimo_tema: "preguntando_emocion"  # Actualización
@@ -50,20 +51,20 @@ stories:
       - action: action_ejercicio_respiracion_final
       - intent: finalizar_ejercicio
 
-    # Usuario rechaza ejercicio respiracion
-    ### no se si sirva para rechazar otros
-  - story: usuario rechaza ejercicio
+
+  - story: flujo meditacion guiada
     steps:
-    - intent: rechazar_ejercicio
-    - action: utter_respetar_decision
-    - action: utter_ofrecer_opciones
+      - intent: elegir_meditacion
+      - action: action_meditacion_guiada
 
-
-
-  - story: usuario rechaza ayuda en emoción
+  - story: flujo journaling guiado
     steps:
-      - intent: negar_ayuda_emocion
-      - action: utter_ok_sin_ayuda
+      - intent: elegir_journaling
+      - action: action_Escritura_guiada
+
+
+
+
 
 
   # - story: reaccion_afirmativa_triste
@@ -228,13 +229,6 @@ stories:
 
 
 
-  # - story: usuario_proporciona_nombre
-  #   steps:
-  #     - intent: saludo
-  #     - action: utter_pedir_nombre
-  #     - intent: proporcionar_info_personal
-  #     - action: action_set_name
-  #     - action: utter_greet_with_name
 
   # - story: practica_conversacion
   #   steps:
@@ -249,3 +243,11 @@ stories:
   #     - action: utter_ayuda
   #     - intent: afirmar
   #     - action: action_guia_respiracion
+
+
+
+
+  - story: responder con llama2
+    steps:
+    - intent: pregunta_ollama
+    - action: action_llama2_response

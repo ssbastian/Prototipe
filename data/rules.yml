@@ -2,6 +2,19 @@ version: "3.1"
 
 rules:
 
+
+
+  - rule: manejar rechazo de ejercicio en cualquier momento
+    steps:
+      - intent: rechazar_ejercicio
+      - action: utter_respetar_decision
+      - action: utter_ofrecer_opciones
+
+  - rule: manejar rechazo de ayuda en emoción
+    steps:
+      - intent: negar_ayuda_emocion
+      - action: utter_ok_sin_ayuda
+
 # - rule: Ofrecer ayuda si ayuda_recomendada es True
 #   condition:
 #     - slot_was_set:
@@ -23,16 +36,16 @@ rules:
 
 
 
-- rule: Fallback por baja confianza
-  steps:
-    - intent: nlu_fallback
-    - action: utter_default
+  - rule: Fallback por baja confianza
+    steps:
+      - intent: nlu_fallback
+      - action: utter_default
 
 
-- rule: botones muestrame
-  steps:
-    - intent: traer_botones
-    - action: utter_botones
+  - rule: botones muestrame
+    steps:
+      - intent: traer_botones
+      - action: utter_botones
 
 
 

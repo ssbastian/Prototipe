@@ -1,10 +1,12 @@
 version: "3.1"
 
+ 
+
 intents:
   - saludo
+  - respuesta_saludo_reencuentro
   - dar_nombre
   - expresar_emocion
-  - escribir_emocion_manual # no 
   - consulta_ayuda
   - iniciar_conversacion_ligera #no
   - consejos_sociales
@@ -13,15 +15,16 @@ intents:
   - negar # no 
   - afirmar_ayuda_emocion
   - negar_ayuda_emocion
-
-    finalizar_ejercicio
-    paso_inhalar_listo
-    paso_mantener_listo
-    paso_exhalar_listo
+  
+  - finalizar_ejercicio
+  - paso_inhalar_listo
+  - paso_mantener_listo
+  - paso_exhalar_listo
 
   - traer_botones # no 
   - cambiar_tema # no 
   - continuar # no 
+  - pregunta_ollama #SI
 
 
 entities:
@@ -111,11 +114,13 @@ responses:
   utter_botones:
     - text: "Hola estos son los botonoes"
 
+  utter_presentarse:
+    - text: "Hola, soy un bot prototipo creado para apoyar a personas introvertidas con sus habilidades comunicacionales especificamente en situaciones sociales. Estoy aquí para escucharte y ofrecerte consejos útiles. 😊"
   utter_pedir_nombre:
-    - text: "Hola, ¿cómo te llamas?"
+    - text: "¿cómo te llamas?"
 
   utter_saludo_con_nombre:
-    - text: "¡Hola de nuevo, {name}!"
+    - text: "¡Hola de nuevo, {name}! Me alegra verte otra vez por aquí. ¿Qué tal te ha ido desde nuestra última charla?"
   
   utter_ya_saludado:
     - text: "¡Hola de nuevo! ¿Cómo te puedo ayudar ahora?"
@@ -204,6 +209,9 @@ actions:
   - action_ejercicio_respiracion_exhalar
   - action_ejercicio_respiracion_final
 
+  - action_meditacion_guiada
+  - action_Escritura_guiada
+
   - action_guardar_contexto
   - action_recuperar_contexto
 
@@ -214,6 +222,8 @@ actions:
   - action_guia_respiracion
   - action_sugerir_temas
   - action_set_name
+
+  - action_llama2_response # COMUNICACION con llama
 
 
 session_config:

@@ -2,6 +2,60 @@ version: "3.1"
 
 nlu:
 
+- intent: expresar_emocion
+  examples: |
+    - 😄 [feliz](emotion)
+    - [feliz](emotion)
+    - 😌 [tranquilo](emotion)
+    - [tranquilo](emotion)
+    - 😍 [emocionado](emotion)
+    - [emocionado](emotion)
+    - 😢 [triste](emotion)
+    - [triste](emotion)
+    - 😟 [ansioso](emotion)
+    - [ansioso](emotion)
+    - 😡 [enojado](emotion)
+    - [enojado](emotion)
+    - 😔 [inseguro](emotion)
+    - [inseguro](emotion)
+    - 😴 [cansado](emotion)
+    - [cansado](emotion)
+    - 😐 [neutral](emotion)
+    - [neutral](emotion)
+
+
+- intent: pregunta_ollama
+  examples: |
+    - ¿Qué opinas de la inteligencia artificial?
+    - ¿Cómo funciona el aprendizaje automático?
+    - Cuéntame sobre las redes neuronales
+    - ¿Qué es el procesamiento del lenguaje natural?
+    - Explícame cómo se entrena un modelo de IA
+    - ¿Qué opinas de los chatbots?
+    - ¿Cómo se usa la IA en la vida diaria?
+    - ¿Qué es el deep learning?
+
+- intent: afirmar
+  examples: |
+    - Sí
+    - Claro
+    - Por favor
+    - Así es
+    - Correcto
+    - Dale
+    - ¡Sí!
+
+
+- intent: negar
+  examples: |
+    - no
+    - para nada
+    - nunca
+    - negativo
+    - ni lo digas
+    - no estoy seguro
+    - creo que no
+    - no quiero
 
 - intent: finalizar_ejercicio # finalizar ejercicio respiracion
   examples: |
@@ -33,26 +87,7 @@ nlu:
     - Ya exhalé
 
 
-- intent: expresar_emocion
-  examples: |
-    - 😄 [feliz](emotion)
-    - [feliz](emotion)
-    - 😌 [tranquilo](emotion)
-    - [tranquilo](emotion)
-    - 😍 [emocionado](emotion)
-    - [emocionado](emotion)
-    - 😢 [triste](emotion)
-    - [triste](emotion)
-    - 😟 [ansioso](emotion)
-    - [ansioso](emotion)
-    - 😡 [enojado](emotion)
-    - [enojado](emotion)
-    - 😔 [inseguro](emotion)
-    - [inseguro](emotion)
-    - 😴 [cansado](emotion)
-    - [cansado](emotion)
-    - 😐 [neutral](emotion)
-    - [neutral](emotion)
+
 
 - intent: afirmar_ayuda_emocion
   examples: |
@@ -61,28 +96,6 @@ nlu:
 - intent: negar_ayuda_emocion
   examples: |
     - negar_ayuda_emocion
-
-
-- intent: cambiar_tema  # Nuevo intent para interrupciones
-  examples: |
-    - mejor hablemos de otra cosa
-    - cambiemos de tema
-    - no quiero hablar de esto ahora
-    - prefiero hablar de [deportes](tipo_consejo)
-    - me aburrió este tema
-
-- intent: continuar  # Nuevo intent para retomar
-  examples: |
-    - volvamos a lo anterior
-    - continúa con lo que decías
-    - retomemos
-    - sí, termina lo que íbamos
-    - no, mejor sigue con lo otro
-
-- intent: traer_botones
-  examples: |
-    - mostrar botones
-
 
 - intent: saludo
   examples: |
@@ -106,6 +119,18 @@ nlu:
     - Hola, bot
     - Buenas, ¿me puedes ayudar?
 
+
+- intent: consulta_ayuda
+  examples: |
+    - ¿Puedes ayudarme?
+    - Necesito ayuda
+    - ¿Puedes ayudarme?
+    - No sé qué hacer
+    - Dame consejos
+    - ¿Qué me recomiendas?
+    - Estoy perdido
+
+
 - intent: dar_nombre
   examples: |
     - I am [Sebastián](person_name)
@@ -120,8 +145,7 @@ nlu:
     - Me puedes llamar [Luis](person_name)
     - Mi nombre completo es [Sebastián Sánchez](person_name)
     - [Tatiana](person_name)
-
-
+    
 - intent: despedida
   examples: |
     - Adiós
@@ -129,6 +153,52 @@ nlu:
     - Nos vemos
     - Ya me voy
     - Chao
+
+
+## =====
+##Ejercicios
+## ====
+- intent: elegir_meditacion
+  examples: |
+    - Quiero hacer meditación
+    - Meditación guiada
+    - Hagamos meditación
+    - Me gustaría meditar
+    - Vamos a meditar
+
+- intent: elegir_journaling
+  examples: |
+    - Quiero escribir
+    - Hagamos journaling
+    - Me gustaría escribir lo que siento
+    - Quiero reflexionar
+    - Vamos a hacer journaling
+
+
+
+
+- intent: cambiar_tema  # Nuevo intent para interrupciones
+  examples: |
+    - mejor hablemos de otra cosa
+    - cambiemos de tema
+    - no quiero hablar de esto ahora
+    - prefiero hablar de [deportes](tipo_consejo)
+    - me aburrió este tema
+
+- intent: continuar  # Nuevo intent para retomar
+  examples: |
+    - volvamos a lo anterior
+    - continúa con lo que decías
+    - retomemos
+    - sí, termina lo que íbamos
+    - no, mejor sigue con lo otro
+
+- intent: traer_botones
+  examples: |
+    - mostrar botones
+
+
+
 
 - intent: get_telegram_id
   examples: |
@@ -140,15 +210,7 @@ nlu:
     - ¿Tienes mi número de usuario?
     - Dame mi ID por favor
 
-- intent: consulta_ayuda
-  examples: |
-    - ¿Puedes ayudarme?
-    - Necesito ayuda
-    - ¿Puedes ayudarme?
-    - No sé qué hacer
-    - Dame consejos
-    - ¿Qué me recomiendas?
-    - Estoy perdido
+
 
 - intent: iniciar_conversacion_ligera
   examples: |
@@ -174,9 +236,6 @@ nlu:
 
 
 
-
-
-
 - intent: ansiedad_social
   examples: |
     - Me tiembla la voz al hablar
@@ -198,38 +257,9 @@ nlu:
 
 
 
-- intent: afirmar
-  examples: |
-    - Sí
-    - Claro
-    - Por favor
-    - Así es
-    - Correcto
-    - Dale
-    - ¡Sí!
-
-
-- intent: negar
-  examples: |
-    - no
-    - para nada
-    - nunca
-    - negativo
-    - ni lo digas
-    - no estoy seguro
-    - creo que no
-    - no quiero
 
 # Nuevos intents complementados
 
-
-    
-
-- intent: escribir_emocion_manual
-  examples: |
-    - Escribir mi emoción
-    - Otra emoción
-    - Quiero escribir cómo me siento
 
 - intent: pedir_escucha
   examples: |
